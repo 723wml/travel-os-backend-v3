@@ -1,4 +1,4 @@
-const { getStore } = require('@netlify/blobs');
+const { getStore,connectLambda } = require('@netlify/blobs');
 
 const CORS = {
   'Content-Type': 'application/json',
@@ -8,6 +8,7 @@ const CORS = {
 };
 
 exports.handler = async (event) => {
+  connectLambda(event); 
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 204, headers: CORS, body: '' };
   }
