@@ -1,16 +1,23 @@
-const { getStore,connectLambda } = require('@netlify/blobs');
+const { getStore, connectLambda } = require('@netlify/blobs');
 
 const CORS = {
-  'Content-Type': 'application/json',
+  'Content-Type': 'application/json; charset=utf-8',
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type'
 };
 
 exports.handler = async (event) => {
-  connectLambda(event); 
+  // 关键：必须先连接 Blobs 环境
+  connectLambda(event);
+
+  // 1. 优先处理预检请求，直接返回 204，不要进入后面的 try/catch
   if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 204, headers: CORS, body: '' };
+    return {
+      statusCode: 204,
+      headers: CORS,
+      body: ''
+    };
   }
 
   try {
