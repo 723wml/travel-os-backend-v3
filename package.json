@@ -2,6 +2,6 @@
   "name": "travel-os-backend",
   "version": "1.0.0",
   "dependencies": {
-    "@netlify/blobs": "^8.1.0"
+    "@netlify/blobs": "^9.0.0"
   }
 }
