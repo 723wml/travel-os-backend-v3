@@ -52,6 +52,12 @@ exports.handler = async (event) => {
       const data = (await store.get(`data_${username}`, { type: 'json' })) || {};
       return { statusCode: 200, headers: CORS, body: JSON.stringify({ ok: true, data }) };
     }
+ if (action === 'pull' && event.httpMethod === 'GET') {
+      const user = params.user;
+      if (!user) return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: '缺少用户标识' }) };
+      const data = (await store.get(`data_${user}`, { type: 'json' })) || {};
+      return { statusCode: 200, headers: CORS, body: JSON.stringify(data) };
+    }
 
     if (action === 'push' && event.httpMethod === 'POST') {
       const user = params.user;
